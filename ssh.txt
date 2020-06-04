@@ -1,0 +1,110 @@
+1. На локальной машине генерируем ключи (private и public)
+    mkdir sshkeys — создаём директорию для сгенерированный ключей.
+    cd sshkeys — переходим в данную директорию.
+    В директории sshkeys запускаем команду:
+    ~$ ssh-keygen -t rsa -b 4096 -f id_rsa — команда создаст 2 ключа (для локального компьютера и для удалённого (с расширением .pub)), где -t rsa — метод шифрования, -b 4096 — длина ключа, -f id_rsa — местонахождение и имя ключа (указывая только имя, создаст ключи в настоящей папке).
+    Обязательно вводим passfrase (ex: hello!)
+    ~$ ls sshkeys -l (или ls .ssh -l) — посмотреть сгенерированные ключи.
+
+2. Публичный ключ передаём на удалённую машину командой (находясь в папке с ключами):
+    ~$ ssh-copy-id -i id_rsa.pub timur@176.113.81.20, где -i id_rsa.pub timur@176.113.81.20 — передаваемый публичный ключ по указанному адресу.
+
+3. Переходим на удалённую машину
+3.1. Проверяем в домашней директории удалённой машины наличие папки .ssh с находящимся в ней файлом authorized_keys:
+    ~$ vim .ssh/authorized_keys — в данном файле должен быть переданный ключ (можно сравнить с ключом на локальной машине). 
+
+Либо так:
+2. Публичный ключ передаём на удалённую машину парной командой scp (secure copy) ssh:
+    ~$ scp .ssh/tim.pub timur@176.113.81.20:~/ — копируем публичный ключ на удалённую машину (remote server) в домашнюю папку.
+
+3. Переходим на удалённую машину для настройки службы ssh
+3.1. Создаём папку .ssh
+    ~$ mkdir .ssh — для данной директории устанавливаем permission 700 — читать может только владелец директории.
+    ~$ chmod 700 .ssh
+3.2. Перемещаем публичный ключ в файл авторизованных ключей
+    ~$ cat tim.pub » .ssh/authorized_keys
+3.3. На файл authorized_keys устанавливаем permission 644 — изменять может только владелец, читать могут все.
+    ~$ chmod 644 .ssh/authorized_keys
+
+4. Возвращаемся на локальную машину
+    exit
+
+Теперь войти можно так:
+    ssh timur@176.113.81.20 -i .ssh/tim - аппендикс «-i .ssh/tim» — указание на идентификационный файл
+
+5. Переходим обратно на удалённую машину
+5.1. Изменяем настройки ssh, чтобы нельзя было войти используя пароль
+    ~$ su — переходим под root
+    # vim /etc/ssh/sshd_config
+    Меняем следующие настройки:
+        PermitRootLogin no — под root нельзя залогиниться
+        PubkeyAuthentication yes — открываем антентификацию по публичному ключу
+        PasswordAuthentication no
+        PermitEmptyPasswords no — запрет на пустые пароли
+        AuthorizedKeysFile %h/.ssh/authorized_keys — проверить
+    Сохраняем файл
+5.2. Перезапускаем ssh и проверяем статус
+    # systemctl restart sshd.service
+    # systemctl status sshd.service
+
+6. Возвращаемся на локальную машину
+    exit exit
+6.1. Проверить. Добавляем локальный ключ в ssh локальной машины:
+    ~$ ssh-add ~/sshkeys/id_rsa — путь к ключу.
+    ~$ ssh-add -l — проверить добавление ключа.
+6.2. Чтобы не вводить длинную строку ssh timur@176.113.81.20 -i .ssh/tim
+    ~$ vim .ssh/config
+    Host www-python (любое имя)
+	    HostName 176.113.81.20
+	    User timur
+	    IdentityFile ~/.ssh/tim — локальный ключ (private)
+	    IdentitiesOnly yes — искользуем только данный ключ
+	    AddKeysToAgent yes — запромнить passphrase
+    Сохраняем файл
+    Теперь войти можно так: ssh www-python
+
+7. Настраиваем порт отличный от 22-го
+7.1. На удалённой машине:
+    ~$ su
+    # vim /etc/ssh/sshd_config
+    Меняем настройку Port на любой незанятый порт выше 1024, например 31182:
+    Port 31182
+7.1.1 (при необходимости) Настраиваем firewall:
+    # firewall-cmd -permanent -add-port=31182/tep
+7.2. Перезапускаем ssh и проверяем статус:
+    # systemctl restart sshd.service
+    # systemctl status sshd.service
+
+8. Возвращаемся на локальную машину:
+    exit exit
+8.1. На локальной машине редактируем .ssh/config:
+    ~$ vim .ssh/config
+    Host www-python (любое имя)
+	    HostName 176.113.81.20
+	    User timur
+	    IdentityFile ~/.ssh/tim — локальный ключ (private)
+	    IdentitiesOnly yes — искользуем только данный ключ
+	    AddKeysToAgent yes — запромнить passphrase
+	    Port 31182
+
+9. Проверка настроек
+    ssh www-python -v — в выдаче проверяем параметры:
+        Authentications that can continue: publickey
+        Authentication succeeded (publickey)
+
+10. Проверка подключения к root:
+    ssh root@176.113.81.20 -p 31182
+    … permission denied (publickey) — в способах нет password
+
+11. Дополнительно. Шифруем локальный ключ.
+11.1. Удаляем установленный ключ командой:
+    ~$ ssh-add -l — проверяем установленный ключ.
+    ~$ ssh-add -d tim — удаляем ключ (в данном случае ключ tim).
+11.2. Переименовываем ключ tim на tim_old
+11.3. Шифруем ключ командой (находясь в папке с ключами):
+    ~$ openssl pkcs8 -topk8 -v2 des3 -in tim_old -out tim
+        Encryption Password: (ex: lorem)
+11.4. На файл tim устанавливаем permission 600 (находясь в папке с ключами):
+    ~$ chmod 600 tim
+11.5. Добавляем ключ в ssh командой:
+    ~$ ssh-add tim
