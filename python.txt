@@ -1,0 +1,45 @@
+1. Обновляем систему:
+	~$ apt update
+	~$ apt upgrade
+	~$ apt full-upgrade
+	~$ apt autoremove
+
+2. Установка дополнительных библиотек, для компиляции python (необходимые компоненты для сборки кода из исходников):
+	~$ sudo apt install build-essential checkinstall
+
+3. Устанавливаем необходимые python библиотеки:
+	~$ sudo apt install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
+
+*****Всё что нужно для сборки python из исходников проинсталировано*****
+
+4. Качаем python из github (https://github.com/python/cpython/releases) или из python.org (https://www.python.org/ftp/python/) в домашнюю папку:
+	~$	wget https://github.com/python/cpython/archive/v3.8.3.tar.gz
+
+5. Разархивируем скачанный архив:
+	~$ tar xzf v3.8.3.tar.gz
+	и удаляем скачанный архив
+	~$ rm v3.8.3.tar.gz
+
+6. Переходим в разархивированную папку:
+	~$ cd cpython-3.8.3/
+
+7. Создаём скрытую папку .python в которую скомпилируем python из папки cpython-3.8.3/. В последствии можно будет удалить данную папку и пересобрать python заново.
+	~/cpython-3.8.3$ mkdir ~/.python
+
+8. Собираем python в папку .python (префикс: --prefix=/home/www/.python):
+	~/cpython-3.8.3$ sudo ./configure --enable-optimizations --prefix=/home/www/.python
+	~/cpython-3.8.3$ sudo make
+	~/cpython-3.8.3$ sudo make altinstall — переносим скомпилированный python в папку .python
+
+9. Обновляем pip:
+	~$ sudo /home/www/.python/bin/python3.8 -m pip install -U pip
+
+10. Удаляем папку из которой собирали python (cpython-3.8.3):
+	~$ sudo rm -rf cpython-3.8.3
+
+11. Запускаем python вызовом в оболочке python3.8. Добавим папку с исполняемым файлом python3.8 (~/.python/bin) в переменную среды $PATH (переменная среды, используемая для указания оболочке, где искать исполняемые файлы):
+	~$ vim .bashrc — в конец данного файла добавить строку:
+	export PATH="$HOME/.python/bin:$PATH"
+
+	и перезапускаем терминал или вводим команду:
+	~$ . .bashrc

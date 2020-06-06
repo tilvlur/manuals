@@ -1,0 +1,27 @@
+*****Виртуальная среда Python*****
+
+1. Создадим и перейдём в папку project1
+    ~$ mkdir project1 && cd project1
+
+2. Создадим в данной папке виртуальное окружение «env»
+	~/project1$ python3.8 -m venv env — т.е. модуль (-m venv) создаёт виртуальное окружение с именем «env»
+	~/project1$ ls — проверяем создание окружения env.
+
+	В итоге в папке «project1» должна появиться папкак «env» в которой будут находится все необходимые исполняемые файлы (pithon3.8, pip...), для работы в «отдельном» python3.8.
+
+3. Активируем окружение «env»
+	~/project1$ . env/bin/activate — «точка» в начале строки — это синоним команды source, т.е. таким образом мы даём команду на запуск скрипта activate.
+
+4. Обновим для окружения «env» pip
+	(env) ~/project1$ pip install -U pip
+
+5. Установим для окружения «env» django
+	(env) ~/project1$ pip install django
+	и посмотрим какие пакеты для python установлены
+	(env) ~/project1$ pip freeze — получим список установленных для окружения pip-пакетов.
+
+6. Экспортируем список установленных для окружения pip-пакетов в файл requirements.txt
+	(env) ~/project1$ pip freeze > requirements.txt
+
+7. Устанавливаем в другом окружении все необходимые для данного проекта пакеты
+    pip install -r requirements.txt — опция -r как раз это и имеет в виду «-r, --requirement <file> — Install from the given requirements file».

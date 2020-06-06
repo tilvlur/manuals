@@ -1,0 +1,35 @@
+1. Сменить имя хоста
+	hostnamectl set-hostname pythonVDS
+
+2. Сменить пароль для root
+	passwd
+
+3. Обновление системы
+	apt update
+	apt upgrade
+	apt full-upgrade
+	apt autoremove
+
+4. Установить sudo
+	apt install sudo
+
+5. Добавить пользователя www
+	adduser www
+
+6. Добавить пользователя в sudoers
+	vi /etc/sudoers
+
+	# User privilege specification
+	root    ALL=(ALL:ALL) ALL
+	www     ALL=(ALL:ALL) ALL
+
+7. Сменить пользователя
+	su - www
+	
+8. Локали
+	sudo localedef ru_RU.UTF-8 -i ru_RU -fUTF-8 ; \
+	export LANGUAGE=ru_RU.UTF-8 ; \
+	export LANG=ru_RU.UTF-8 ; \
+	export LC_ALL=ru_RU.UTF-8 ; \
+	sudo locale-gen ru_RU.UTF-8 ; \
+	sudo dpkg-reconfigure locales
