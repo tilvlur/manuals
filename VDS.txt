@@ -31,9 +31,15 @@
 	su - www
 	
 9. Локали
+	Установить пакет:
+	sudo apt-get install locales
+	
+	Затем выполнить комманду:
 	sudo localedef ru_RU.UTF-8 -i ru_RU -fUTF-8 ; \
 	export LANGUAGE=ru_RU.UTF-8 ; \
 	export LANG=ru_RU.UTF-8 ; \
 	export LC_ALL=ru_RU.UTF-8 ; \
 	sudo locale-gen ru_RU.UTF-8 ; \
 	sudo dpkg-reconfigure locales
+	
+	EN - убрать, RU - установить и выбрать по умолчанию.
