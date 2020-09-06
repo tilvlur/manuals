@@ -1,32 +1,36 @@
 1. Сменить имя хоста
-	hostnamectl set-hostname pythonVDS
+	hostnamectl set-hostname [VDS] - напирмер VDS
 
-2. Сменить пароль для root
+2. Добавим новое имя хоста в /etc/hosts
+	vi /etc/hosts
+	127.0.0.1 [VDS] - добавить под 127.0.0.1 localhost
+
+3. Сменить пароль для root
 	passwd
 
-3. Обновление системы
+4. Обновление системы
 	apt update
 	apt upgrade
 	apt full-upgrade
 	apt autoremove
 
-4. Установить sudo
+5. Установить sudo
 	apt install sudo
 
-5. Добавить пользователя www
+6. Добавить пользователя www
 	adduser www
 
-6. Добавить пользователя в sudoers
+7. Добавить пользователя в sudoers
 	vi /etc/sudoers
 
 	# User privilege specification
 	root    ALL=(ALL:ALL) ALL
 	www     ALL=(ALL:ALL) ALL
 
-7. Сменить пользователя
+8. Сменить пользователя
 	su - www
 	
-8. Локали
+9. Локали
 	sudo localedef ru_RU.UTF-8 -i ru_RU -fUTF-8 ; \
 	export LANGUAGE=ru_RU.UTF-8 ; \
 	export LANG=ru_RU.UTF-8 ; \
