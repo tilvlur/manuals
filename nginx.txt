@@ -1,1 +1,2 @@
-
+Устанавливаем файрвол
+  sudo apt install ufw
