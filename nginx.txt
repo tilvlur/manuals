@@ -1,2 +1,40 @@
-Устанавливаем файрвол
-  sudo apt install ufw
+1. Устанавливаем файрвол
+    sudo apt install ufw
+
+2. Устанавливаем nginx с brotli
+Добавляем репозиторий
+    sudo apt-add-repository -y ppa:hda-me/nginx-stable
+Устанавливаем сервер и модули
+    sudo apt install brotli nginx nginx-module-brotli
+Разрешаем запуск и автозагрузку при старте ОС
+    sudo systemctl unmask nginx.service
+
+3. Настраиваем nginx
+Открываем настройки сервера
+    sudo vim /etc/nginx/nginx.conf
+Включаем brotli (раскоммернтируем строки)
+    load_module modules/ngx_http_brotli_filter_module.so;
+    load_module modules/ngx_http_brotli_static_module.so;
+Настраиваем brotli в соответствии со сниппетом:
+    # Brotli
+        brotli on;
+        #уровень сжатия - 6 (удалить перед вставкой)
+        brotli_comp_level 6;
+        
+        #обрабатываемые типы (удалить перед вставкой)
+        brotli_types
+          text/xml
+          image/svg+xml
+          application/x-font-ttf
+          image/vnd.microsoft.icon
+          application/x-font-opentype
+          application/json
+          font/eot
+          application/vnd.ms-fontobject
+          application/javascript
+          font/otf
+          application/xml
+          application/xhtml+xml
+          text/javascript
+          application/x-javascript
+          text/$;
