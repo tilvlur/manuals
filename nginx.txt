@@ -1,40 +1,89 @@
 1. Устанавливаем файрвол
-    sudo apt install ufw
+        sudo apt install ufw
 
 2. Устанавливаем nginx с brotli
 Добавляем репозиторий
-    sudo apt-add-repository -y ppa:hda-me/nginx-stable
+        sudo apt-add-repository -y ppa:hda-me/nginx-stable
 Устанавливаем сервер и модули
-    sudo apt install brotli nginx nginx-module-brotli
+        sudo apt install brotli nginx nginx-module-brotli
 Разрешаем запуск и автозагрузку при старте ОС
-    sudo systemctl unmask nginx.service
+        sudo systemctl unmask nginx.service
 
-3. Настраиваем nginx
+3. Настраиваем brotli в nginx
 Открываем настройки сервера
-    sudo vim /etc/nginx/nginx.conf
+        sudo vim /etc/nginx/nginx.conf
 Включаем brotli (раскоммернтируем строки)
-    load_module modules/ngx_http_brotli_filter_module.so;
-    load_module modules/ngx_http_brotli_static_module.so;
+        load_module modules/ngx_http_brotli_filter_module.so;
+        load_module modules/ngx_http_brotli_static_module.so;
 Настраиваем brotli в соответствии со сниппетом:
-    # Brotli
-        brotli on;
-        #уровень сжатия - 6 (удалить перед вставкой)
-        brotli_comp_level 6;
-        
-        #обрабатываемые типы (удалить перед вставкой)
-        brotli_types
-          text/xml
-          image/svg+xml
-          application/x-font-ttf
-          image/vnd.microsoft.icon
-          application/x-font-opentype
-          application/json
-          font/eot
-          application/vnd.ms-fontobject
-          application/javascript
-          font/otf
-          application/xml
-          application/xhtml+xml
-          text/javascript
-          application/x-javascript
-          text/$;
+        # Brotli
+            brotli on;
+            #уровень сжатия - 6 (удалить перед вставкой)
+            brotli_comp_level 6;
+
+            #обрабатываемые типы (удалить перед вставкой)
+            brotli_types
+              text/xml
+              image/svg+xml
+              application/x-font-ttf
+              image/vnd.microsoft.icon
+              application/x-font-opentype
+              application/json
+              font/eot
+              application/vnd.ms-fontobject
+              application/javascript
+              font/otf
+              application/xml
+              application/xhtml+xml
+              text/javascript
+              application/x-javascript
+              text/$;
+
+4. Настраиваем файрвол
+Проверяем статус (ничего страшного, если "Status: inactive")
+        sudo ufw status
+Проверяем список приложений (в первый раз будет доступен только SSH, нам нужно добавить nginx)
+        sudo ufw app list
+Available applications:
+        Nginx Full
+        Nginx HTTP
+        Nginx HTTPS
+        OpenSSH
+Добавляем nginx в ufw, если его нет
+Создаём и открываем файл nginx.ini
+        sudo vim /etc/ufw/applications.d/nginx.ini
+Вставляем следующий сниппет:
+        [Nginx HTTP]
+        title=Web Server
+        description=Enable NGINX HTTP traffic
+        ports=80/tcp
+
+        [Nginx HTTPS] \
+        title=Web Server (HTTPS) \
+        description=Enable NGINX HTTPS traffic
+        ports=443/tcp
+
+        [Nginx Full]
+        title=Web Server (HTTP,HTTPS)
+        description=Enable NGINX HTTP and HTTPS traffic
+        ports=80,443/tcp
+Проверяем список приложений ещё раз
+        sudo ufw app list
+Включаем файрвол
+        sudo ufw enable
+Разрешаем nginx
+        sudo ufw allow 'Nginx Full'
+Разрешаем OpenSSH
+        sudo ufw allow 'OpenSSH'
+Проверяем статус
+        sudo ufw status
+            Status: active
+
+            To                         Action      From
+            --                         ------      ----
+            Nginx Full                 ALLOW       Anywhere
+            OpenSSH                    ALLOW       Anywhere
+            Nginx Full (v6)            ALLOW       Anywhere (v6)
+            OpenSSH (v6)               ALLOW       Anywhere (v6)
+
+5. Установка certbot
