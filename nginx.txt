@@ -89,6 +89,7 @@ Available applications:
 Добавляем источники
     sudo apt install software-properties-common
     sudo add-apt-repository ppa:certbot/certbot
+    sudo apt update #обновляемся
 Ставим certbot
 
 sudo apt install python-certbot-nginx
