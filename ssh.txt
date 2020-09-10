@@ -7,7 +7,7 @@
     ~$ ls sshkeys -l (или ls .ssh -l) — посмотреть сгенерированные ключи.
 
 2. Публичный ключ передаём на удалённую машину командой (находясь в папке с ключами):
-    ~$ ssh-copy-id -i id_rsa.pub timur@176.113.81.20, где -i id_rsa.pub timur@176.113.81.20 — передаваемый публичный ключ по указанному адресу.
+    ~$ ssh-copy-id -i id_rsa.pub www@176.119.159.156, где -i id_rsa.pub [www]@[176.119.159.156] — передаваемый публичный ключ по указанному адресу.
 
 3. Переходим на удалённую машину
 3.1. Проверяем в домашней директории удалённой машины наличие папки .ssh с находящимся в ней файлом authorized_keys:
@@ -54,23 +54,23 @@
     ~$ ssh-add -l — проверить добавление ключа.
 6.2. Чтобы не вводить длинную строку ssh timur@176.113.81.20 -i .ssh/tim
     ~$ vim .ssh/config
-    Host www-python (любое имя)
-	    HostName 176.113.81.20
-	    User timur
+    Host www (любое имя)
+	    HostName 176.119.159.156
+	    User www
 	    IdentityFile ~/.ssh/tim — локальный ключ (private)
 	    IdentitiesOnly yes — искользуем только данный ключ
 	    AddKeysToAgent yes — запромнить passphrase
     Сохраняем файл
-    Теперь войти можно так: ssh www-python
+    Теперь войти можно так: ssh www
 
 7. Настраиваем порт отличный от 22-го
 7.1. На удалённой машине:
     ~$ su
     # vim /etc/ssh/sshd_config
-    Меняем настройку Port на любой незанятый порт выше 1024, например 31182:
-    Port 31182
+    Меняем настройку Port на любой незанятый порт выше 1024, например 33322:
+    Port 33322
 7.1.1 (при необходимости) Настраиваем firewall:
-    # firewall-cmd -permanent -add-port=31182/tep
+    # firewall-cmd -permanent -add-port=33322/tep
 7.2. Перезапускаем ssh и проверяем статус:
     # systemctl restart sshd.service
     # systemctl status sshd.service
@@ -80,20 +80,20 @@
 8.1. На локальной машине редактируем .ssh/config:
     ~$ vim .ssh/config
     Host www-python (любое имя)
-	    HostName 176.113.81.20
+	    HostName 176.119.159.156
 	    User timur
 	    IdentityFile ~/.ssh/tim — локальный ключ (private)
 	    IdentitiesOnly yes — искользуем только данный ключ
 	    AddKeysToAgent yes — запромнить passphrase
-	    Port 31182
+	    Port 33322
 
 9. Проверка настроек
-    ssh www-python -v — в выдаче проверяем параметры:
+    ssh www -v — в выдаче проверяем параметры:
         Authentications that can continue: publickey
         Authentication succeeded (publickey)
 
 10. Проверка подключения к root:
-    ssh root@176.113.81.20 -p 31182
+    ssh root@176.119.159.156 -p 33322
     … permission denied (publickey) — в способах нет password
 
 11. Дополнительно. Шифруем локальный ключ.
