@@ -74,52 +74,59 @@
     sudo systemctl start nginx
     sudo systemctl restart nginx #остановка и запуск
     #перезагрузка без сброса соединений (использовать, если внесли изменения в конфигурацию)
-    sudo systemctl reload nginx
+        sudo systemctl reload nginx
     #по умолчанию nginx запускается при загрузке включении/перезагрузки сервера, если не надо, то:
-    sudo systemctl disable nginx
+        sudo systemctl disable nginx
     #чтобы вернуть автозагрузку
-    sudo systemctl enable nginx
+        sudo systemctl enable nginx
+Настройка блоков веб-сервера
+Для каждого сайта/домена создаём директорию
+    sudo mkdir -p /var/www/<your_domain>/html
+Передадим права на папку текущему пользователю
+    sudo chown -R $USER:$USER /var/www/<your_domain>/html
+    sudo chmod -R 755 /var/www/<your_domain>
+Теперь в папку html можно добавить index.html-файл
+Сделаем отдельную конфигурацию nginx для этого сайта
+    sudo vim /etc/nginx/sites-available/<your_domain>.conf
+    Вставить:
+        server {
+            listen 80;
+            listen [::]:80;
 
+            root /var/www/<your_domain>/html;
+            index index.html index.htm index.nginx-debian.html;
 
+            server_name <your_domain> www.<your_domain>;
 
-
-2. Устанавливаем nginx с brotli
-Добавляем репозиторий
-    sudo apt-add-repository -y ppa:hda-me/nginx-stable
-Устанавливаем сервер и модули
-    sudo apt install brotli nginx nginx-module-brotli
-Разрешаем запуск и автозагрузку при старте ОС
-    sudo systemctl unmask nginx.service
-
-3. Настраиваем brotli в nginx
-Открываем настройки сервера
+            location / {
+                    try_files $uri $uri/ =404;
+            }
+        }
+Во избежание "hash bucket memory problem" в файле
     sudo vim /etc/nginx/nginx.conf
-Включаем brotli (раскоммернтируем строки)
-    load_module modules/ngx_http_brotli_filter_module.so;
-    load_module modules/ngx_http_brotli_static_module.so;
-Настраиваем brotli в соответствии со сниппетом:
-    # Brotli
-        brotli on;
-        #уровень сжатия - 6 (удалить перед вставкой)
-        brotli_comp_level 6;
+    раскомментируем настройку
+    #server_names_hash_bucket_size
+Протестируем конфиг
+    sudo nginx -t
+Делаем ссылку на данный конфиг в "sites-enabled", тестируем, перезагружаем nginx
+    sudo ln -s /etc/nginx/sites-available/<your_domain>.conf /etc/nginx/sites-enabled/
+    sudo nginx -t
+    sudo systemctl reload nginx
+Проверим, что возвращает сервер на запрос <your_domain>
+    #симуляция запроса с браузера
+    curl <your_domain>
 
-        #обрабатываемые типы (удалить перед вставкой)
-        brotli_types
-            text/xml
-            image/svg+xml
-            application/x-font-ttf
-            image/vnd.microsoft.icon
-            application/x-font-opentype
-            application/json
-            font/eot
-            application/vnd.ms-fontobject
-            application/javascript
-            font/otf
-            application/xml
-            application/xhtml+xml
-            text/javascript
-            application/x-javascript
-            text/$;
+
+
+
+3. Устанавливаем сertbot
+    sudo apt update
+    sudo apt install python3-acme python3-certbot python3-mock python3-openssl python3-pkg-resources python3-pyparsing python3-zope.interface
+    sudo apt install python3-certbot-nginx
+
+
+
+
 
 
 5. Установка certbot
