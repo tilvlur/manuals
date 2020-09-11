@@ -47,6 +47,7 @@
         --                         ------      ----
         Nginx Full                 ALLOW       Anywhere
         Nginx Full (v6)            ALLOW       Anywhere (v6)
+***
 Если nginx отсутствует, то:
 Создаём и открываем файл nginx.ini
     sudo vim /etc/ufw/applications.d/nginx.ini
@@ -65,6 +66,19 @@
     title=Web Server (HTTP,HTTPS)
     description=Enable NGINX HTTP and HTTPS traffic
     ports=80,443/tcp
+***
+Проверяем статус веб-сервера
+    systemctl status nginx
+Управление веб-сервером
+    sudo systemctl stop nginx
+    sudo systemctl start nginx
+    sudo systemctl restart nginx #остановка и запуск
+    #перезагрузка без сброса соединений (использовать, если внесли изменения в конфигурацию)
+    sudo systemctl reload nginx
+    #по умолчанию nginx запускается при загрузке включении/перезагрузки сервера, если не надо, то:
+    sudo systemctl disable nginx
+    #чтобы вернуть автозагрузку
+    sudo systemctl enable nginx
 
 
 
