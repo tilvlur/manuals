@@ -25,7 +25,49 @@
     sudo ufw disable
 Сброс настроек до состояния по умолчанию
     sudo ufw reset
-    
+
+2. Установка nginx
+    sudo apt update
+    sudo apt install nginx
+Настройка ufw
+Проверка списка доступных предустановок приложений
+    sudo ufw app list
+    Available applications:
+    ...
+      Nginx Full
+      Nginx HTTP
+      Nginx HTTPS
+    ...
+Разрешаем nginx
+    sudo ufw allow 'Nginx Full'
+Проверяем статус
+    sudo ufw status
+        Status: active
+        To                         Action      From
+        --                         ------      ----
+        Nginx Full                 ALLOW       Anywhere
+        Nginx Full (v6)            ALLOW       Anywhere (v6)
+Если nginx отсутствует, то:
+Создаём и открываем файл nginx.ini
+    sudo vim /etc/ufw/applications.d/nginx.ini
+Вставляем следующий сниппет:
+    [Nginx HTTP]
+    title=Web Server
+    description=Enable NGINX HTTP traffic
+    ports=80/tcp
+
+    [Nginx HTTPS] \
+    title=Web Server (HTTPS) \
+    description=Enable NGINX HTTPS traffic
+    ports=443/tcp
+
+    [Nginx Full]
+    title=Web Server (HTTP,HTTPS)
+    description=Enable NGINX HTTP and HTTPS traffic
+    ports=80,443/tcp
+
+
+
 
 2. Устанавливаем nginx с brotli
 Добавляем репозиторий
@@ -65,51 +107,6 @@
             application/x-javascript
             text/$;
 
-4. Настраиваем файрвол
-Проверяем статус (ничего страшного, если "Status: inactive")
-    sudo ufw status
-Проверяем список приложений (в первый раз будет доступен только SSH, нам нужно добавить nginx)
-    sudo ufw app list
-Available applications:
-    Nginx Full
-    Nginx HTTP
-    Nginx HTTPS
-    OpenSSH
-Добавляем nginx в ufw, если его нет
-Создаём и открываем файл nginx.ini
-    sudo vim /etc/ufw/applications.d/nginx.ini
-Вставляем следующий сниппет:
-    [Nginx HTTP]
-    title=Web Server
-    description=Enable NGINX HTTP traffic
-    ports=80/tcp
-
-    [Nginx HTTPS] \
-    title=Web Server (HTTPS) \
-    description=Enable NGINX HTTPS traffic
-    ports=443/tcp
-
-    [Nginx Full]
-    title=Web Server (HTTP,HTTPS)
-    description=Enable NGINX HTTP and HTTPS traffic
-    ports=80,443/tcp
-Проверяем список приложений ещё раз
-    sudo ufw app list
-Включаем файрвол
-    sudo ufw enable
-Разрешаем nginx
-    sudo ufw allow 'Nginx Full'
-Разрешаем OpenSSH
-    sudo ufw allow 'OpenSSH'
-Проверяем статус
-    sudo ufw status
-        Status: active
-        To                         Action      From
-        --                         ------      ----
-        Nginx Full                 ALLOW       Anywhere
-        OpenSSH                    ALLOW       Anywhere
-        Nginx Full (v6)            ALLOW       Anywhere (v6)
-        OpenSSH (v6)               ALLOW       Anywhere (v6)
 
 5. Установка certbot
 Добавляем источники
