@@ -1,5 +1,31 @@
-1. Устанавливаем файрвол
+1. Установка, настройка ufw (Uncomplicated Firewall)
     sudo apt install ufw
+Список доступных предустановок приложений
+    sudo ufw app list
+Разрешение подключений по SSH
+    #22 порт
+        sudo ufw allow SSH
+        или
+        sudo ufw allow 22
+    #22 порт, но только TCP/IP
+        sudo ufw allow 22/tcp
+    #!настраиваем SSH на соответствующий порт по TCP/IP
+        sudo ufw allow 33322/tcp
+Проверка состояния ufw
+    sudo ufw status
+Более подробная информация
+    sudo ufw status verbose
+Активация ufw (предванительно разрешить SSH!)
+    sudo ufw enable
+Удаление правил по номеру правила
+    sudo ufw status numbered
+    #если хотим удалить правило номер 2
+    sudo ufw delete 2
+Отключение ufw
+    sudo ufw disable
+Сброс настроек до состояния по умолчанию
+    sudo ufw reset
+    
 
 2. Устанавливаем nginx с brotli
 Добавляем репозиторий
