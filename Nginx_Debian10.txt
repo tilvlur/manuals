@@ -87,7 +87,7 @@
     sudo chmod -R 755 /var/www/<your_domain>
 Теперь в папку html можно добавить index.html-файл
 Сделаем отдельную конфигурацию nginx для этого сайта
-    sudo vim /etc/nginx/sites-available/<your_domain>.conf
+    sudo vim /etc/nginx/sites-available/<your_domain>
     Вставить:
         server {
             listen 80;
@@ -109,7 +109,7 @@
 Протестируем конфиг
     sudo nginx -t
 Делаем ссылку на данный конфиг в "sites-enabled", тестируем, перезагружаем nginx
-    sudo ln -s /etc/nginx/sites-available/<your_domain>.conf /etc/nginx/sites-enabled/
+    sudo ln -s /etc/nginx/sites-available/<your_domain> /etc/nginx/sites-enabled/
     sudo nginx -t
     sudo systemctl reload nginx
 Проверим, что возвращает сервер на запрос <your_domain>
