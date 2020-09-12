@@ -4,7 +4,6 @@
     set wildmenu "Доп. меню по Tab в коммандной строке
     set showcmd "Отображение вводимых команд
     set encoding=UTF-8 "Кодировка UTF-8 по умолчанию
-    set termguicolors "24-bit color in xterm-compatible terminals support
     syntax enable "Подсветка синтаксиса
     set background=dark "Тёмное оформление
     set cursorline "Подсветка строки с курсором
