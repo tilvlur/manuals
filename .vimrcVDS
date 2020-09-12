@@ -5,9 +5,10 @@
     set showcmd "Отображение вводимых команд
     set encoding=UTF-8 "Кодировка UTF-8 по умолчанию
     syntax enable "Подсветка синтаксиса
+    set termguicolors "24-bit color in xterm-compatible terminals support
     set background=dark "Тёмное оформление
     set cursorline "Подсветка строки с курсором
-    hi CursorLine term=bold cterm=bold guibg=Grey40 "Без подчёркивания
+    hi CursorLine cterm=NONE
 "Режимы отображение курсора
     let &t_SI.="\e[5 q" "SI = режим вставки (5 - мигающая черта)
     let &t_SR.="\e[3 q" "SR = режим замены (3 - мигающее подчёркивание)
