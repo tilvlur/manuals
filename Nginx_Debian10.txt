@@ -89,19 +89,21 @@
 Сделаем отдельную конфигурацию nginx для этого сайта
     sudo vim /etc/nginx/sites-available/<your_domain>
     Вставить:
-        server {
-            listen 80;
-            listen [::]:80;
+>>>>>
+server {
+    listen 80;
+    listen [::]:80;
 
-            root /var/www/<your_domain>/html;
-            index index.html index.htm index.nginx-debian.html;
+    root /var/www/<your_domain>/html;
+    index index.html index.htm index.nginx-debian.html;
 
-            server_name <your_domain> www.<your_domain>;
+    server_name <your_domain> www.<your_domain>;
 
-            location / {
-                    try_files $uri $uri/ =404;
-            }
-        }
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+<<<<<
 Во избежание "hash bucket memory problem" в файле
     sudo vim /etc/nginx/nginx.conf
     раскомментируем настройку
