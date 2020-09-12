@@ -99,11 +99,15 @@ server {
     index index.html index.htm index.nginx-debian.html;
 
     server_name <your_domain> www.<your_domain>;
-
-    location / {
-        try_files $uri $uri/ =404;
+#React SPA
+location / {
+        try_files $uri $uri/ /index.html;
     }
-}
+#Non SPA
+#    location / {
+#        try_files $uri $uri/ =404;
+#    }
+#}
 <<<<<
 Во избежание "hash bucket memory problem" в файле
     sudoedit /etc/nginx/nginx.conf
