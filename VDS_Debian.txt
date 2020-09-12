@@ -43,3 +43,8 @@
 	sudo dpkg-reconfigure locales
 	
 	EN - убрать, RU - установить и выбрать по умолчанию.
+
+10. Vim
+	sudo apt install vim
+	#выбираем редактор по умолчанию
+	sudo update-alternatives --config editor
