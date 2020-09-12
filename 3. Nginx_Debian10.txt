@@ -50,7 +50,8 @@
 ***
 Если nginx отсутствует, то:
 Создаём и открываем файл nginx.ini
-    sudo vim /etc/ufw/applications.d/nginx.ini
+    #"sudoedit" - то же самое, что и "sudo -E vim" 
+    sudoedit /etc/ufw/applications.d/nginx.ini
 Вставляем следующий сниппет:
     [Nginx HTTP]
     title=Web Server
@@ -87,7 +88,7 @@
     sudo chmod -R 755 /var/www/<your_domain>
 Теперь в папку html можно добавить index.html-файл
 Сделаем отдельную конфигурацию nginx для этого сайта
-    sudo vim /etc/nginx/sites-available/<your_domain>
+    sudoedit /etc/nginx/sites-available/<your_domain>
     Вставить:
 >>>>>
 server {
@@ -105,7 +106,7 @@ server {
 }
 <<<<<
 Во избежание "hash bucket memory problem" в файле
-    sudo vim /etc/nginx/nginx.conf
+    sudoedit /etc/nginx/nginx.conf
     раскомментируем настройку
     #server_names_hash_bucket_size
 Протестируем конфиг
