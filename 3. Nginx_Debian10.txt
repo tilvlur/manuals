@@ -107,7 +107,7 @@ location / {
 #    location / {
 #        try_files $uri $uri/ =404;
 #    }
-#}
+}
 <<<<<
 Во избежание "hash bucket memory problem" в файле
     sudoedit /etc/nginx/nginx.conf
