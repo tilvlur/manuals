@@ -7,8 +7,8 @@
     set termguicolors "24-bit color in xterm-compatible terminals support
     syntax enable "Подсветка синтаксиса
     set background=dark "Тёмное оформление
-    set number "Нyмерация строк
     set cursorline "Подсветка строки с курсором
+    hi CursorLine term=bold cterm=bold guibg=Grey40 "Без подчёркивания
 "Режимы отображение курсора
     let &t_SI.="\e[5 q" "SI = режим вставки (5 - мигающая черта)
     let &t_SR.="\e[3 q" "SR = режим замены (3 - мигающее подчёркивание)
