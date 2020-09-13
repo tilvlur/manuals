@@ -15,7 +15,7 @@
 	~$ git init . — инициализиция git в данной директории (точка — то же самое, что и /home/user/myproject/)
 	~$ git init git_stady — инициализация git в папке git_stady
 
-*****Теперь директория myproject отслеживается git	*****
+*****Теперь директория myproject отслеживается git*****
 
 4. Чтобы понять, что сейчас происходит в отслеживаемой директории:
 	~$ git status
@@ -150,10 +150,10 @@
 	git checkout master
 	git branch -d timur_works — удаляем ветвь локально
 	git push origin --delete timur_works — удаляем ветку с github
+    -----------------------------------------------------------------------------------------------
 
+*****WebStorm*****
 
-
-WebStorm
 В настройках WebStorm указываем путь к исполняемому файлу
     Vercion Control > Git > Path to Git executable:
         C:\Program Files\Git\bin\git.exe
