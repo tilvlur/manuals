@@ -2,6 +2,43 @@
     https://git-scm.com/downloads
 Устанавливаем Git
 
+1. Вводим в терминале (подписи к действиям на git):
+	~$ git config --global user.name "Name Surname"
+	~$ git config --global user.email "user@gmail.com"
+2. Проверить настройки:
+	~$ git config -l
+	Файл настроек находится в домашней директории:
+	~$ .gitconfig
+3. Для того, чтобы git начал отслеживать изменения в директории, создаём базу данных git:
+	~$ mkdir myproject
+	~$ cd myproject
+	~$ git init . — инициализиция git в данной директории (точка — то же самое, что и /home/user/myproject/)
+	~$ git init git_stady — инициализация git в папке git_stady
+
+*****Теперь директория myproject отслеживается git	*****
+
+4. Чтобы понять, что сейчас происходит в отслеживаемой директории:
+	~$ git status
+	Если добавить новые файлы в отслеживаемую директорию и вызвать git status, то git выведет сообщение о том, что есть неотслеживаемые файлы.
+
+5. Если состояние директории нас устраивает, с учётом добавленных или изменённых файлов, то нужно сделать «снимок» состояния директории:
+	~$ git add * — звёздочка или точка, говорит о том, что мы добавляем в снимок все файлы директории
+	или
+	~$ git add file1.txt — если мы хотим закоммитить только файл 1.
+
+6. Добавляем снимок директории (подготовленные (staging) файлы) в базу данных git:
+	~$ git commit -m «My Initial commit, this is Version1.0» — всегда добаляем message -m «Комментарий»
+
+*****Снимок директории сделан*****
+
+7. Стадии отслеживания git
+    №   Действие с файлом/папкой            Стадия отслеживания
+    --------------------------------------------------------------
+    1   echo «HelloGit» > file.txt      Untracked
+    2   git add file.txt                Staged
+    3   git commit -m «Vercion1.0»      Copy in Local Repository
+    4   git push                        Copy in Remote Repository
+
 WebStorm
 В настройках WebStorm указываем путь к исполняемому файлу
     Vercion Control > Git > Path to Git executable:
