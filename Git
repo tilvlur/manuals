@@ -97,7 +97,7 @@
 	~$ git branch fix_er — создаст ветвь fix_er.
 	~$ git branch — отобразит ветви и ветвь, на которой мы находимся.
 	~$ git checkout fix_error - перейти на ветвь fix_error.
-	~$ git branch -d fix_error — удалить ветвь fix_error (предварительно перейти на другую ветвь.
+	~$ git branch -d fix_error — удалить ветвь fix_error (предварительно перейти на другую ветвь).
 	~$ git branch -D fix_error — удалить, если есть коммиты и нет объединений (просто -d вызовет ошибку).
 	~$ git checkout -b fix_error — создать и сразу перейти на ветвь fix_error.
 
