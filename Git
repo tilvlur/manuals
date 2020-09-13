@@ -16,3 +16,6 @@ WebStorm
 Управление commit push pull в правом верхнем углу
 Боковая вкладка commit слева в верхней половине
 Во вкладке commit есть checkbox "Amend" - сделать не новый коммин, а объединиться с предыдущим.
+***GitHub
+На GitHub-е в правом верхнем углу "плюсик" > "New repository"
+В WebStorm > VCS > Git > Remotes > "плюсик" > подключаем репозиторий
