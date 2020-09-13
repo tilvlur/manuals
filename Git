@@ -1,7 +1,7 @@
 Загружаем и устанавливаем Git
     	https://git-scm.com/downloads
 
->>>Использование Git<<<
+>>>ИСПОЛЬЗОВАНИЕ Git<<<
 
 1. Вводим в терминале (подписи к действиям на git):
 	~$ git config --global user.name "Name Surname"
