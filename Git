@@ -1,0 +1,18 @@
+Загружаем установочные файлы
+    https://git-scm.com/downloads
+Устанавливаем Git
+
+WebStorm
+В настройках WebStorm указываем путь к исполняемому файлу
+    Vercion Control > Git > Path to Git executable:
+        C:\Program Files\Git\bin\git.exe
+За контроль версий отвечает вкладка VCS
+Выбираем необходимую папку
+    VCS > Import into Version Control > Create Git Repository
+    создана ветка master
+В левом нижнем углу WS указана активная ветка
+Создаём .gitignore-файл
+Добавить исключения в gitignore можно по ПКМ
+Управление commit push pull в правом верхнем углу
+Боковая вкладка commit слева в верхней половине
+Во вкладке commit есть checkbox "Amend" - сделать не новый коммин, а объединиться с предыдущим.
