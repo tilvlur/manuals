@@ -47,12 +47,12 @@
     ~$ ssh-add -l — проверить добавление ключа.
 6.2. Чтобы не вводить длинную строку ssh www@176.119.159.156 -i .ssh/id_rsa
     ~$ vim .ssh/config
-    Host www (любое имя)
-	    HostName 176.119.159.156
-	    User www
-	    IdentityFile ~/.ssh/tim — локальный ключ (private)
-	    IdentitiesOnly yes — искользуем только данный ключ
-	    AddKeysToAgent yes — запромнить passphrase
+    Host VDS (любое имя)
+    	HostName 176.119.159.156
+	User www
+	IdentityFile ~/.ssh/id_rsa — локальный ключ (private)
+	IdentitiesOnly yes — искользуем только данный ключ
+	AddKeysToAgent yes — запромнить passphrase
     Сохраняем файл
     Теперь войти можно так: ssh www
 
