@@ -36,6 +36,7 @@
         PermitEmptyPasswords no — запрет на пустые пароли
         AuthorizedKeysFile %h/.ssh/authorized_keys — проверить
     Сохраняем файл
+    
 5. Перезапускаем ssh и проверяем статус
     # systemctl restart sshd.service
     # systemctl status sshd.service
