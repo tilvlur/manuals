@@ -6,7 +6,7 @@
 	127.0.0.1 VDS - добавить под 127.0.0.1 localhost
 
 3. Сменить пароль для root
-	passwd
+	passwd [lorem]
 
 4. Обновление системы
 	apt update
