@@ -93,12 +93,12 @@
 11. Дополнительно. Шифруем локальный ключ.
 11.1. Удаляем установленный ключ командой:
     ~$ ssh-add -l — проверяем установленный ключ.
-    ~$ ssh-add -d tim — удаляем ключ (в данном случае ключ tim).
-11.2. Переименовываем ключ tim на tim_old
+    ~$ ssh-add -d id_rsa — удаляем ключ (в данном случае ключ id_rsa).
+11.2. Переименовываем ключ id_rsa на id_rsa_old
 11.3. Шифруем ключ командой (находясь в папке с ключами):
-    ~$ openssl pkcs8 -topk8 -v2 des3 -in tim_old -out tim
-        Encryption Password: (ex: lorem)
-11.4. На файл tim устанавливаем permission 600 (находясь в папке с ключами):
-    ~$ chmod 600 tim
+    ~$ openssl pkcs8 -topk8 -v2 des3 -in id_rsa_old -out id_rsa
+        Encryption Password: [lorem]
+11.4. На файл id_rsa устанавливаем permission 600 (находясь в папке с ключами):
+    ~$ chmod 600 id_rsa
 11.5. Добавляем ключ в ssh командой:
-    ~$ ssh-add tim
+    ~$ ssh-add id_rsa
