@@ -50,12 +50,12 @@
     ~$ vim .ssh/config
     Host www (любое имя)
     	HostName 176.119.159.156
-	User www
-	IdentityFile ~/.ssh/id_rsa — локальный ключ (private)
-	IdentitiesOnly yes — искользуем только данный ключ
-	AddKeysToAgent yes — запромнить passphrase
-    Сохраняем файл
-    Теперь войти можно так: ssh www
+		User www
+		IdentityFile ~/.ssh/id_rsa — локальный ключ (private)
+		IdentitiesOnly yes — искользуем только данный ключ
+		AddKeysToAgent yes — запромнить passphrase
+		Сохраняем файл
+		Теперь войти можно так: ssh www
 
 7. Настраиваем порт отличный от 22-го
 7.1. На удалённой машине:
@@ -75,11 +75,11 @@
     ~$ vim .ssh/config
     Host www
     	HostName 176.119.159.156
-	User www
-	IdentityFile ~/.ssh/id_rsa
-	IdentitiesOnly yes
-	AddKeysToAgent yes
-	Port 33322
+		User www
+		IdentityFile ~/.ssh/id_rsa
+		IdentitiesOnly yes
+		AddKeysToAgent yes
+		Port 33322
 
 9. Проверка настроек
     ssh www -v — в выдаче проверяем параметры:
