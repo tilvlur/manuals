@@ -26,11 +26,7 @@
 3.3. На файл authorized_keys устанавливаем permission 644 — изменять может только владелец, читать могут все.
     ~$ chmod 644 .ssh/authorized_keys
 
-4. Возвращаемся на локальную машину
-    exit
-
-5. Переходим обратно на удалённую машину
-5.1. Изменяем настройки ssh, чтобы нельзя было войти используя пароль
+4. Изменяем настройки ssh, чтобы нельзя было войти используя пароль
     ~$ su — переходим под root
     # vim /etc/ssh/sshd_config
     Меняем следующие настройки:
@@ -40,7 +36,7 @@
         PermitEmptyPasswords no — запрет на пустые пароли
         AuthorizedKeysFile %h/.ssh/authorized_keys — проверить
     Сохраняем файл
-5.2. Перезапускаем ssh и проверяем статус
+5. Перезапускаем ssh и проверяем статус
     # systemctl restart sshd.service
     # systemctl status sshd.service
 
