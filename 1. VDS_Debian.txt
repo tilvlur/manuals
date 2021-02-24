@@ -18,7 +18,7 @@
 	apt install sudo
 
 6. Добавить пользователя www
-	adduser www
+	adduser www [same pass]
 
 7. Добавить пользователя в sudoers
 	vi /etc/sudoers
