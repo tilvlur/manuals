@@ -1,0 +1,29 @@
+Docker - мини-виртуальные машины, функциональность данных машин урезана до нам необходимой.
+Docker состоит из:
+	- Docker Engine - собственно само приложение Docker, установленное на компьютер.
+	- Docker Container - запущенная (бегущая) виртуальная машина.
+	- Docker Image - образ с которого запускается Docker Container.
+	- Dockerfile - если мы хотим создать свой Image, то мы описываем из чего этот Image будет состоять.
+	
+Flow:
+	- Устанавливаем Docker Engine.
+	- Создаём и сохраняем Dockerfile. Ex.:
+		FROM amazonlinux
+		
+		RUN yum -y update
+		RUN yum -y install httpd
+		
+		RUN echo 'Hello, World form Docker!' > /var/www/html/index.html
+		CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
+		
+		EXPOSE 80
+	- Запускаем build этого Dockerfile
+	- В итоге получем Docker Image на нашем компьютере.
+	- Из этого Docker Image запустим Run
+	- В результате запустится Docker Container (мини-виртуальная машина), который выполнит комманды, прописанные в Dockerfile.
+
+На удалённом сервере:
+	- Вывести информацию о машине: cat /etc/os-release
+	Устанавливаем:
+	- sudo apt install apt-transport-https //активируем передачу файлов и данных через https
+	- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -

@@ -1,0 +1,26 @@
+- sudo apt install xfce4
+- sudo reboot
+- отключить спящий режим в настройках
+- отключить спящий режим в консоли:
+	отключаем следующие systemd:
+		sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+	в ответ должны получить:
+		hybrid-sleep.target
+		Created symlink /etc/systemd/system/sleep.target → /dev/null.
+		Created symlink /etc/systemd/system/suspend.target → /dev/null.
+		Created symlink /etc/systemd/system/hibernate.target → /dev/null.
+		Created symlink /etc/systemd/system/hybrid-sleep.target → /dev/null.
+	sudo reboot
+	проверить применение изменений:
+		sudo systemctl status sleep. target suspend.target hibernate.target hybrid-sleep. target
+	в ответ должны получить:
+		sleep.target ... (dead)
+		suspend.target ... (dead)
+		hibernate.target ... (dead)
+		hybrid-sleep.target ... (dead)
+- установить UI текстовый редактор:
+	sudo apt install gedit
+- установить firefox-esr
+	sudo apt install firefox-esr
+- установить xfce4-taskmanager
+	sudo apt install xfce4-taskmanager
